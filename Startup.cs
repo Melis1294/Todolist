@@ -9,8 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Sqlite;
+using TodolistAPI.Models;
 
-namespace TodolistRazor
+namespace TodolistAPI
 {
     public class Startup
     {
@@ -24,7 +26,7 @@ namespace TodolistRazor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
             services.AddControllers();
         }
 
