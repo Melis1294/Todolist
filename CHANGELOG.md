@@ -1,4 +1,0 @@
-- First Commit
-- * .DS_Store: First Commit
-- * .gitignore: First Commit
-- Initial commit
