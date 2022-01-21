@@ -3,14 +3,16 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="TodolistRazor_Solution" expanded="True" selected="True" />
+          <Node name="TodolistRazor_Solution" expanded="True">
+            <Node name="TodolistRazor" selected="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <DisabledProjects>
-    <String>TodolistRazor/TodolistRazor.csproj</String>
+    <String>TodolistRazor.csproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
