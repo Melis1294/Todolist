@@ -19,6 +19,10 @@ namespace TodolistAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            using (var client = new ApplicationDbContext())
+            {
+                client.Database.EnsureCreated();
+            }
         }
 
         public IConfiguration Configuration { get; }
