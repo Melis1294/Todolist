@@ -1,0 +1,24 @@
+<form novalidate autocomplete="off" #form="ngForm" (submit)="onSubmit(form)">
+    <input type="hidden" name="id"
+    [value]="service.formData.id" />
+    <div class="form-group">
+        <label>TITLE</label>
+        <!--default type of input is text-->
+        <input class="form-control form-control-lg" placeholder="Task title" 
+        name="title" #title="ngModel" [(ngModel)]="service.formData.title" 
+        required maxlength="100" [class.invalid]="title.invalid && title.touched"/>
+    </div>
+    <div class="form-group">
+        <label>DESCRIPTION</label>
+        <textarea class="form-control form-control-lg" placeholder="Task description" 
+        name="description" #description="ngModel" [(ngModel)]="service.formData.description" maxlength="5000"></textarea>
+    </div>  
+    <!--<div class="form-group form-check">        
+        <label class="form-check-label" for="flexCheckDefault">COMPLETED</label>        
+        <input type="checkbox" class="form-check-input" value="completed" 
+        onchange="" name="completed" #completed="ngModel" [(ngModel)]="service.formData.completed"/>
+    </div>-->
+    <div class="form-group">
+        <button class="btn btn-info btn-lg btn-block col-md-12 mt-3" type="submit" [disabled]="form.invalid">SUBMIT</button>
+    </div>
+</form>

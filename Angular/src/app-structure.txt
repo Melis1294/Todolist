@@ -1,0 +1,14 @@
+● src
++---● app
+|   +--● tasks
+|   |  |--tasks.component.ts|.html
+|   |  +--● task-detail-form
+|   |  |  |--task-detail-form.component.ts|.html
+|   |  
+|   +--● shared
+|   |  |--task-detail.service.ts
+|   |  |--task-detail.model.ts
+|   |
+|   |--app.module.ts
+|
+|--index.html (cdn path for bootstrap & fa icons)
