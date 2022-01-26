@@ -33,10 +33,15 @@ export class TaskDetailService {
     for (let i = 0; i < length; i++)
     {
       let task = new TaskDetail();
-      task.id = Number(this.myObj[i].Id);
-      task.title = this.myObj[i].Title;
-      task.description = this.myObj[i].Description;      
-      task.completed = this.myObj[i].Completed;
+      task.id = Number(this.myObj[i].id);       
+      console.log(task.id);
+      task.title = this.myObj[i].title;
+      console.log(task.title);
+      task.description = this.myObj[i].description;   
+      console.log(task.description);   
+      task.completed = this.myObj[i].taskCompleted;
+      console.log(task.completed);
+      console.log(this.myObj[i].shortDescription);
       this.myList.push(task);
     } 
     });
@@ -54,6 +59,7 @@ export class TaskDetailService {
 
   checkTaskDetail(task : TaskDetail)
   {
+    console.log("doing check on http PUT...");
     return this.http.put(`${this.baseURL}/${task.id}`, task);
   }
 }

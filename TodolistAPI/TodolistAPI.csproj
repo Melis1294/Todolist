@@ -15,6 +15,8 @@
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Contracts" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Utils" />
     <None Remove="Swashbuckle.AspNetCore" />
+    <None Remove="Microsoft.AspNet.WebApi.Core" />
+    <None Remove="AutoMapper" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -30,5 +32,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http.Description;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,15 +25,22 @@ namespace TodolistAPI.Controllers
         // GET: api/values
         // get all DB entries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TaskDetail>>> GetTasks()
+        //[ResponseType(typeof(List<TaskDetailDTO>))]
+        public async Task<IEnumerable<TaskDetailDTO>> GetTasks()
         {
-            return await _context.Tasks.ToListAsync();
+            /*List<TaskDetail> tasks = await _context.Tasks.ToListAsync();
+            IEnumerable<TaskDetailDTO> taskDTOs = from t in tasks select new TaskDetailDTO(t);
+            return taskDTOs;*/
+            return await _context.Tasks
+                .Select(x => TaskToDTO(x))
+                .ToListAsync();
         }
 
         // GET: api/TaskDetail/5
         // get the entry specified by the id
         [HttpGet("{id}")]
-        public async Task<ActionResult<TaskDetail>> GetTaskDetail(int id)
+        //[ResponseType(typeof(TaskDetailDTO))]
+        public async Task<ActionResult<TaskDetailDTO>> GetTaskDetail(int id)
         {
             var taskDetail = await _context.Tasks.FindAsync(id);
 
@@ -41,48 +49,63 @@ namespace TodolistAPI.Controllers
                 return NotFound();
             }
 
-            return taskDetail;
+            return TaskToDTO(taskDetail);
         }
 
         // PUT: api/TaskDetail/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // To update an existing value
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTaskDetail(int id, TaskDetail taskDetail)
+        public async Task<IActionResult> PutTaskDetail(int id, TaskDetailDTO taskDetailDTO)
         {
-            if (id != taskDetail.Id)
+            if (id != taskDetailDTO.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(taskDetail).State = EntityState.Modified;
+            var taskDetail = await _context.Tasks.FindAsync(id);
+            if (taskDetail == null)
+            {
+                return NotFound();
+            }
+
+            taskDetail.Title = taskDetailDTO.title;
+            taskDetail.Description = taskDetailDTO.description;
+            taskDetail.Completed = taskDetailDTO.taskCompleted;
+
+            _context.Entry(taskDetailDTO).State = EntityState.Modified;
 
             try
             {
                 await _context.SaveChangesAsync();
-            }            
-            catch (DbUpdateConcurrencyException)
+            }
+            catch (DbUpdateConcurrencyException) when (!TaskDetailExists(id))
             {// if application used by multiple users
-                if (!TaskDetailExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<TaskDetail>> PostTaskDetail(TaskDetail taskDetail)
+        public async Task<ActionResult<TaskDetailDTO>> PostTaskDetail(TaskDetailDTO taskDetailDTO)
         {
-            _context.Tasks.Add(taskDetail);
-            await _context.SaveChangesAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return CreatedAtAction("GetTaskDetail", new { id = taskDetail.Id }, taskDetail);
+            var taskDetail = new TaskDetail()
+            {
+                Title = taskDetailDTO.title,
+                Description = taskDetailDTO.description,
+                Completed = taskDetailDTO.taskCompleted
+            };
+
+            _context.Tasks.Add(taskDetail);
+            await _context.SaveChangesAsync();          
+
+            return CreatedAtAction("GetTaskDetail", new { id = taskDetail.Id }, TaskToDTO(taskDetail));
         }
 
         // DELETE: api/TaskDetail/5
@@ -90,6 +113,7 @@ namespace TodolistAPI.Controllers
         public async Task<IActionResult> DeleteTaskDetail(int id)
         {
             var taskDetail = await _context.Tasks.FindAsync(id);
+  
             if (taskDetail == null)
             {
                 return NotFound();
@@ -105,5 +129,8 @@ namespace TodolistAPI.Controllers
         {
             return _context.Tasks.Any(e => e.Id == id);
         }
+
+        private static TaskDetailDTO TaskToDTO(TaskDetail task) =>
+            new TaskDetailDTO(task);        
     }
 }
