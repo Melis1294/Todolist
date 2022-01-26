@@ -1,0 +1,9 @@
+- * .DS_Store: * README.md: * Program.cs: * Startup.cs: * TodolistAPI.csproj: * WeatherForecastController.cs:
+- Rename
+- API First Commit
+- Delete
+- Loading Changelog
+- First Commit
+- * .DS_Store: First Commit
+- * .gitignore: First Commit
+- Initial commit
