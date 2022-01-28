@@ -27,7 +27,6 @@ export class TaskDetailService {
     this.http.get(this.baseURL).subscribe((resp)=>{
     this.myObj = resp;
     this.myList = <TaskDetail[]>this.myObj;
-    console.log(this.myList); 
     let length : number = this.myList.length;
     this.myList = [];
     for (let i = 0; i < length; i++)
@@ -39,7 +38,6 @@ export class TaskDetailService {
         this.myObj[i].completed);
       this.myList.push(task);
     } 
-
     console.log(this.myList); 
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 import { TaskDetail } from '../shared/task-detail.model';
 import { TaskDetailService } from '../shared/task-detail.service';
 
@@ -22,12 +23,7 @@ export class TasksComponent implements OnInit {
   {
     const id = $event.target.value;
     const isChecked = $event.target.checked;
-    console.log(id, isChecked);
-
-
-
     const checkedTask = this.service.myList.find(task => task.id == id);
-
     if (checkedTask != null)
     {
       checkedTask.completed = isChecked;
@@ -52,17 +48,40 @@ export class TasksComponent implements OnInit {
 
   onDelete(id : number)
   {
-    console.log("deleting element at id: ", id);
-    alert("Are you sure to delete this task?");
-    if ("Are you sure to delete this task?")
-    {
-      this.service.deleteTaskDetail(id)
-      .subscribe(
-        response => { 
-          this.service.refreshList();
-          this.toastr.error("Deleted successfully", "Task");
-        }
-      );
-    }
+    // Sweet Alert 2 Modal
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // delete action
+        this.service.deleteTaskDetail(id)
+        .subscribe(
+          response => { 
+            this.service.refreshList();
+            this.toastr.error("Deleted successfully", "Task");
+          }
+        );
+
+        swalWithBootstrapButtons.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })      
   }
 }
