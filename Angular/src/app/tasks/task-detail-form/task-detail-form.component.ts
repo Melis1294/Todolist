@@ -25,7 +25,7 @@ export class TaskDetailFormComponent implements OnInit {
     if(this.service.formData.id == 0)
       this.insertRecord(form);
     else
-      this.updateRecord(form);
+      this.updateRecord(form);    
   }
 
   insertRecord(form: NgForm)

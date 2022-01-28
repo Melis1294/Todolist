@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TaskDetail } from '../shared/task-detail.model';
 import { TaskDetailService } from '../shared/task-detail.service';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-tasks',
@@ -23,19 +22,13 @@ export class TasksComponent implements OnInit {
   {
     selectedRecord.completed = status;
     this.service.checkTaskDetail(selectedRecord).subscribe( 
-      res => {         
+      res => { 
+        console.log(`RES: ${res}`);            
         this.service.refreshList();        
         this.toastr.info('Updated successfully', 'Task');
       },
       err => {console.log(err);}
     );
-  }
-
-  resetForm(form: NgForm)
-  {
-    form.form.reset();
-    // preparo una nuova entry per il DB
-    this.service.formData = new TaskDetail();
   }
 
   // enter in the form the data of the task selected
@@ -47,6 +40,7 @@ export class TasksComponent implements OnInit {
   onDelete(id : number)
   {
     console.log("deleting element at id: ", id);
+    alert("Are you sure to delete this task?");
     if ("Are you sure to delete this task?")
     {
       this.service.deleteTaskDetail(id)

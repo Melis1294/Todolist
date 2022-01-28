@@ -24,8 +24,8 @@
                         <td (click)="populateForm(td)">{{td.title}}</td>
                         <td (click)="populateForm(td)">{{td.description}}</td>
                         <td>
-                            <input type="checkbox" class="form-check-input" value="{{td.completed}}" 
-                            (ngModelChange)="onCheck(td, true)" name="completed" #completed="ngModel" [(ngModel)]="td.completed"/>
+                            <input type="checkbox" class="form-check-input" 
+                            (change)="onCheck(td, true)" [checked]="td.completed"/>
                         </td>                        
                         <td>
                             <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(td.id)"></i>
@@ -52,8 +52,8 @@
                         <td (click)="populateForm(td)">{{td.title}}</td>
                         <td (click)="populateForm(td)">{{td.description}}</td>
                         <td>
-                            <input type="checkbox" class="form-check-input" value="{{td.completed}}" 
-                            (ngModelChange)="onCheck(td, false)" name="completed" #completed="ngModel" [(ngModel)]="td.completed"/>
+                            <input type="checkbox" class="form-check-input" 
+                            (change)="onCheck(td, false)" [checked]="td.completed"/>
                         </td>                    
                         <td>                  
                             <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(td.id)"></i>

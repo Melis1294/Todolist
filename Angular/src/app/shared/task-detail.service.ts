@@ -34,14 +34,14 @@ export class TaskDetailService {
     {
       let task = new TaskDetail();
       task.id = Number(this.myObj[i].id);       
-      console.log(task.id);
+      //console.log(task.id);
       task.title = this.myObj[i].title;
-      console.log(task.title);
+      //console.log(task.title);
       task.description = this.myObj[i].description;   
-      console.log(task.description);   
+      //console.log(task.description);   
       task.completed = this.myObj[i].taskCompleted;
-      console.log(task.completed);
-      console.log(this.myObj[i].shortDescription);
+      //console.log(task.completed);
+      //console.log(this.myObj[i].shortDescription);
       this.myList.push(task);
     } 
     });
@@ -59,7 +59,8 @@ export class TaskDetailService {
 
   checkTaskDetail(task : TaskDetail)
   {
-    console.log("doing check on http PUT...");
+    console.log("doing check on http PUT...", task.id);
+    console.log(`ID: ${task.id}; Task: ${task.title}; Completed: ${task.completed}`);
     return this.http.put(`${this.baseURL}/${task.id}`, task);
   }
 }

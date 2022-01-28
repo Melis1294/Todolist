@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using TodolistAPI.Models;
+using TodolistAPI.Helpers;
 
 namespace TodolistAPI
 {
@@ -43,6 +44,7 @@ namespace TodolistAPI
             services.AddControllers();
 
             services.AddCors();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
