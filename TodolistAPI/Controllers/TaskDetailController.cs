@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http.Description;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,12 +28,10 @@ namespace TodolistAPI.Controllers
         // GET: api/values
         // get all DB entries
         [HttpGet]
-        [ResponseType(typeof(List<TaskDetailDTO>))]
         public async Task<IActionResult> GetTasks()
         {
             List<TaskDetail> tasks = await _context.Tasks.ToListAsync();
             IEnumerable<TaskDetailDTO> taskDTOs = _mapper.Map<IEnumerable<TaskDetailDTO>>(tasks);
-            //IEnumerable<TaskDetailDTO> taskDTOs = from t in tasks select new TaskDetailDTO(t);
             return Ok(taskDTOs);
         }
 
@@ -58,7 +55,6 @@ namespace TodolistAPI.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         // To update an existing value
         [HttpPut("{id}")]
-        [ResponseType(typeof(TaskDetailDTO))]
         public async Task<IActionResult> PutTaskDetail(int id, TaskDetailDTO taskDetailDTO)
         {
             if (!ModelState.IsValid)
@@ -71,13 +67,13 @@ namespace TodolistAPI.Controllers
                 return BadRequest();
             }
 
-            var taskDetail = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == id);
+            var taskDetail = await _context.Tasks.FirstOrDefaultAsync(t => t.Id == taskDetailDTO.id);
             if (taskDetail == null)
             {
                 return NotFound();
             }
 
-            taskDetail = _mapper.Map<TaskDetail>(taskDetailDTO);            
+            _mapper.Map(taskDetailDTO, taskDetail);            
 
             _context.Entry(taskDetail).State = EntityState.Modified;
 
@@ -102,12 +98,6 @@ namespace TodolistAPI.Controllers
             }
 
             var taskDetail = _mapper.Map<TaskDetail>(taskDetailDTO);
-            /*var taskDetail = new TaskDetail()
-            {
-                Title = taskDetailDTO.title,
-                Description = taskDetailDTO.description,
-                Completed = taskDetailDTO.taskCompleted
-            };*/
 
             _context.Tasks.Add(taskDetail);
             await _context.SaveChangesAsync();

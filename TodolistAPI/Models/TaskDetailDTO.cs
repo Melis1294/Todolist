@@ -16,11 +16,11 @@ namespace TodolistAPI.Models
         [Column(TypeName = "nvarchar(5000)")]
         public string description { get; set; }
 
-        public string shortDescription { get; set; }
+        //public string shortDescription { get; set; }
 
-        public bool taskCompleted { get; set; }
+        public bool completed { get; set; }
 
-        private int descriptionLength { get; set; }
+        //private int descriptionLength { get; set; }
 
         public TaskDetailDTO()
         {
@@ -33,10 +33,10 @@ namespace TodolistAPI.Models
             this.id = id;
             this.title = title;
             this.description = description;
-            taskCompleted = completed;
-            descriptionLength = 10;
+            this.completed = completed;
+            //descriptionLength = 10;
 
-            shortDescription = description.Length < descriptionLength ? description : description.Substring(0, descriptionLength);
+            //shortDescription = description.Length < descriptionLength ? description : description.Substring(0, descriptionLength);
         }
 
         // translate class into DTO class
@@ -45,10 +45,10 @@ namespace TodolistAPI.Models
             id = task.Id;
             title = task.Title;
             description = task.Description;
-            taskCompleted = task.Completed;
-            descriptionLength = 10;
+            this.completed = task.Completed;
+            //descriptionLength = 10;
 
-            shortDescription = task.Description.Length < 10 ? task.Description : task.Description.Substring(0, descriptionLength);
+            //hortDescription = task.Description.Length < 10 ? task.Description : task.Description.Substring(0, descriptionLength);
         }
     }
 }

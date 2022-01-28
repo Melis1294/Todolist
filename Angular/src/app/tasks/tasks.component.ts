@@ -9,7 +9,7 @@ import { TaskDetailService } from '../shared/task-detail.service';
   styles: [
   ]
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit {  
 
   constructor(public service: TaskDetailService,
     private toastr:ToastrService) { }
@@ -18,17 +18,30 @@ export class TasksComponent implements OnInit {
     this.service.refreshList();
   }
 
-  onCheck(selectedRecord : TaskDetail, status : boolean)
+  onCheck($event : any)
   {
-    selectedRecord.completed = status;
-    this.service.checkTaskDetail(selectedRecord).subscribe( 
-      res => { 
-        console.log(`RES: ${res}`);            
-        this.service.refreshList();        
-        this.toastr.info('Updated successfully', 'Task');
-      },
-      err => {console.log(err);}
-    );
+    const id = $event.target.value;
+    const isChecked = $event.target.checked;
+    console.log(id, isChecked);
+
+
+
+    const checkedTask = this.service.myList.find(task => task.id == id);
+
+    if (checkedTask != null)
+    {
+      checkedTask.completed = isChecked;
+      console.log(checkedTask?.title, checkedTask?.completed); 
+      this.service.checkTaskDetail(id, checkedTask)
+      .subscribe(
+        response =>
+        {
+          this.service.refreshList();
+          this.toastr.info('Checked successfully', 'Task');
+        },
+        err => {console.log(err);}
+      );      
+    }
   }
 
   // enter in the form the data of the task selected

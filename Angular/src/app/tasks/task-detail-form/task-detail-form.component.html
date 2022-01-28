@@ -12,12 +12,7 @@
         <label>DESCRIPTION</label>
         <textarea class="form-control form-control-lg" placeholder="Task description" 
         name="description" #description="ngModel" [(ngModel)]="service.formData.description" maxlength="5000"></textarea>
-    </div>  
-    <!--<div class="form-group form-check">        
-        <label class="form-check-label" for="flexCheckDefault">COMPLETED</label>        
-        <input type="checkbox" class="form-check-input" value="completed" 
-        onchange="" name="completed" #completed="ngModel" [(ngModel)]="service.formData.completed"/>
-    </div>-->
+    </div>      
     <div class="form-group">
         <button class="btn btn-info btn-lg btn-block col-md-12 mt-3" type="submit" [disabled]="form.invalid">SUBMIT</button>
     </div>

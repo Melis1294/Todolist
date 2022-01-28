@@ -25,7 +25,23 @@
                         <td (click)="populateForm(td)">{{td.description}}</td>
                         <td>
                             <input type="checkbox" class="form-check-input" 
-                            (change)="onCheck(td, true)" [checked]="td.completed"/>
+                            (change)="onCheck($event)" [checked]="td.completed"  [value]="td.id"/>
+                        </td>                        
+                        <td>
+                            <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(td.id)"></i>
+                        </td>    
+                    </ng-container>                     
+                </tr>
+                <div class="jumbotron">
+                    <h4 class="display-9 text-center">Completed Tasks</h4>
+                </div>
+                <tr *ngFor="let td of this.service.myList">    
+                    <ng-container *ngIf="td.completed">           
+                        <td (click)="populateForm(td)">{{td.title}}</td>
+                        <td (click)="populateForm(td)">{{td.description}}</td>
+                        <td>
+                            <input type="checkbox" class="form-check-input" 
+                            (change)="onCheck($event)" [checked]="td.completed"  [value]="td.id"/>
                         </td>                        
                         <td>
                             <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(td.id)"></i>
@@ -33,34 +49,6 @@
                     </ng-container>                     
                 </tr>
             </tbody>
-        </table>
-        <div class="jumbotron">
-            <h4 class="display-9 text-center">Completed Tasks</h4>
-        </div>
-        <table class="table">
-            <thead class="thead-light">
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>                
-                <tr *ngFor="let td of this.service.myList">
-                    <ng-container *ngIf="td.completed">
-                        <td (click)="populateForm(td)">{{td.title}}</td>
-                        <td (click)="populateForm(td)">{{td.description}}</td>
-                        <td>
-                            <input type="checkbox" class="form-check-input" 
-                            (change)="onCheck(td, false)" [checked]="td.completed"/>
-                        </td>                    
-                        <td>                  
-                            <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(td.id)"></i>
-                        </td>   
-                    </ng-container>
-                </tr>                
-            </tbody>
-        </table>
+        </table>        
     </div>
 </div>
