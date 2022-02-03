@@ -57,7 +57,7 @@ export class TaskDetailFormComponent implements OnInit {
   {
     form.form.reset();
     // preparo una nuova entry per il DB
-    this.service.formData = new TaskDetail(0, '', '', false);
+    this.service.formData = this.service.getBlankTask();
   }
 
 }

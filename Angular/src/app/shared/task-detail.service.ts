@@ -11,10 +11,12 @@ export class TaskDetailService {
 
   private readonly baseURL : string = 'http://localhost:5000/api/TaskDetail';
   // name : type
-  formData: TaskDetail = new TaskDetail(0, '', '', false);  
-  public myList : TaskDetail[];
-  public myObj : any;
+  formData: TaskDetail = this.getBlankTask();
+  public myList : Array<TaskDetail>
 
+  getBlankTask(): TaskDetail{
+    return {id: 0, title: '', description: '', completed: false};
+  }
   // create a POST request
   // to post a new json (table value) in the DB
     // returns an Observer
@@ -24,21 +26,8 @@ export class TaskDetailService {
   }
 
   refreshList() {    
-    this.http.get(this.baseURL).subscribe((resp)=>{
-    this.myObj = resp;
-    this.myList = <TaskDetail[]>this.myObj;
-    let length : number = this.myList.length;
-    this.myList = [];
-    for (let i = 0; i < length; i++)
-    {       
-      let task = new TaskDetail (        
-        Number(this.myObj[i].id),
-        this.myObj[i].title,
-        this.myObj[i].description, 
-        this.myObj[i].completed);
-      this.myList.push(task);
-    } 
-    console.log(this.myList); 
+    this.http.get<Array<Object>>(this.baseURL).subscribe((resp: Array<Object>)=>{
+    this.myList = <TaskDetail[]>resp;
     });
   }
 
